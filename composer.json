@@ -1,0 +1,57 @@
+{
+    "name": "augustash/captain-hookie",
+    "description": "CaptainHook-based PHP Git hooks",
+    "license": [
+        "MIT"
+    ],
+    "type": "library",
+    "homepage": "https://github.com/augustash/captain-hookie",
+    "require": {
+        "php": ">=8.0",
+        "captainhook/captainhook": "^5.24",
+        "captainhook/hook-installer": "^1.0",
+        "sebastianfeldmann/git": "^3.11"
+    },
+    "require-dev": {
+        "php-parallel-lint/php-parallel-lint": "*",
+        "phpstan/phpstan": "^1.0",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Augustash\\CaptainHookie\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "captainhook/hook-installer": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "drupal-scaffold": {
+            "file-mapping": {
+                "[project-root]/captainhook.json": {
+                    "mode": "replace",
+                    "overwrite": false,
+                    "path": "src/.captainhook.json"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "test:all": [
+            "@test:lint",
+            "@test:stan",
+            "@test:style"
+        ],
+        "test:lint": "vendor/bin/parallel-lint --exclude vendor src/",
+        "test:stan": "vendor/bin/phpstan analyze --no-interaction --no-progress",
+        "test:static-analysis": [
+            "@test:lint",
+            "@test:stan"
+        ],
+        "test:style": "vendor/bin/phpcs --standard=phpcs.xml.dist src/"
+    }
+}
